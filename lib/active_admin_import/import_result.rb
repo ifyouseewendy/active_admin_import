@@ -8,8 +8,8 @@ module ActiveAdminImport
     end
 
     def add(result, qty)
-       @failed += result.failed_instances
-       @total+=qty
+      @failed += result.failed_instances
+      @total+=qty
     end
 
     def imported_qty
@@ -29,8 +29,10 @@ module ActiveAdminImport
     end
 
     def failed_message
-      failed.map.with_index{|record, i| "##{i+1} - #{record.errors.full_messages.join(', ')}" }.join("\n")
+      failed.map{|record|
+        errors = record.errors
+        (errors.full_messages.zip errors.keys.map{|k| record.send k}).map{|ms| ms.join(' - ')}.join(', ')
+      }.join(" ; ")
     end
-
   end
 end
