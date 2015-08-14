@@ -33,7 +33,7 @@ module ActiveAdminImport
         flash[:warning] = I18n.t('active_admin_import.file_empty_error')
       else
         if result.has_failed?
-          flash[:error] = I18n.t('active_admin_import.failed', count: result.failed.count, model: model_name, plural_model: plural_model_name, message: result.failed_message)
+          flash[:error] = I18n.t('active_admin_import.failed', count: result.failed.count, model: model_name, plural_model: plural_model_name, message: result.failed_message(limit: 5))
           return if options[:batch_transaction]
         end
         if result.has_imported?
